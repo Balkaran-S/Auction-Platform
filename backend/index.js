@@ -75,7 +75,7 @@ app.post('/signin', async (req, res) => {
         const token = jwt.sign({ userId: user._id, username }, SECRET_KEY, { expiresIn: '1h' });
         res.json({ message: 'Signin successful', token });
     } else {
-        res.status(400).json({ message: 'Invalid credentials' });
+        res.status(400).json({ message: 'Invalid credentials' }); 
     }
 });
 
