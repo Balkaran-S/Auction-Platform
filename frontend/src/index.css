@@ -1,0 +1,19 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+} 
+
+#titl {
+    font-size: 72px;
+    background: -webkit-linear-gradient(#31bde7, #b367c4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }

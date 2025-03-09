@@ -8,8 +8,6 @@ const app = express();
 app.use(express.json())
 app.use(cors())
 
-
-
 const SECRET_KEY = 'my_super_secret_123!';
 
 mongoose.connect('mongodb://localhost:27017/auctiondb');
@@ -70,8 +68,12 @@ app.post("/signup", async (req, res) => {
 
 app.post('/signin', async (req, res) => {
     const { username, password } = req.body;
-    const user = await User.findOne({ username, password });
-    if (user) {
+    const user = await User.findOne({ username });
+    if (!user) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (isPasswordValid) {
         const token = jwt.sign({ userId: user._id, username }, SECRET_KEY, { expiresIn: '1h' });
         res.json({ message: 'Signin successful', token });
     } else {
@@ -154,8 +156,6 @@ app.post('/bid/:id', authenticate, async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
-
-
 
 app.listen(5001, () => {
     console.log('Server is running on port 5001');
