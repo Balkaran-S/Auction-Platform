@@ -20,6 +20,7 @@ const UserScheme = new mongoose.Schema({
 const User = mongoose.model('users', UserScheme);
 
 const auctionItemSchema = new mongoose.Schema({
+    itemImage: String,
     itemName: String,
     description: String,
     currentBid: Number,
@@ -83,7 +84,7 @@ app.post('/signin', async (req, res) => {
 
 app.post('/auction', authenticate, async (req, res) => {
     try {
-        const { itemName, description, startingBid, closingTime } = req.body;
+        const { itemName, description, startingBid, closingTime, itemImage } = req.body;
 
         if (!itemName || !description || !startingBid || !closingTime) {
             return res.status(400).json({ message: 'All fields are required' });
@@ -91,9 +92,10 @@ app.post('/auction', authenticate, async (req, res) => {
 
         const newItem = new AuctionItem({
             itemName,
+            itemImage,
             description,
             currentBid: startingBid,
-            highestBidder: '',
+            highestBidder: "NA",
             closingTime,
         });
 
