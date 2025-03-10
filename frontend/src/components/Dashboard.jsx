@@ -14,6 +14,7 @@ import {
 const Dashboard = () => {
   const [items, setItems] = useState([]);
   const nav = useNavigate();
+  const id = localStorage.getItem("id");
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -38,20 +39,6 @@ const Dashboard = () => {
     nav("/signin"); // Redirect to Sign In page
   };
 
-  //       <Link to="/post-auction">
-  //         <button>Post New Auction</button>
-  //       </Link>
-
-  //       <ul>
-  //         {items.map((item) => (
-  //           <li key={item._id}>
-  //             <Link to={`/auction/${item._id}`}>
-  //               {item.itemName} - Current Bid: ${item.currentBid} {item.isClosed ? '(Closed)' : ''}
-  //             </Link>
-  //           </li>
-  //         ))}
-  //       </ul>
-  //     </div>
 
   return (
     <Container
@@ -98,7 +85,7 @@ const Dashboard = () => {
         {items.map((item) => (
           <Col md={4} sm={6} className="mb-4 ">
             <Card
-              className=" text-white border-light "
+              className=" text-white border-light h-100 "
               style={{ backgroundColor: "#1c1c1c" }}
             >
               <Card.Img
@@ -115,16 +102,13 @@ const Dashboard = () => {
                   {item.description}
                 </Card.Text>
                   <p>Current Bid: {item.currentBid}</p>
-                  <p>Highest Bidder - {item.highestBidder}</p>
-                
-                
-
+                  <p>Highest Bidder - {item.highestBidder || "No Bids Yet"}</p>
                 <p>
                   Closing Time: {new Date(item.closingTime).toLocaleString()}
                 </p>
                 {item.isClosed ? "(Closed)" : ""}
 
-                <Button variant="light">Place Bid</Button>
+                <Button variant="light"><a href={`./auction/${item._id}`} className="text-decoration-none text-black">Place Bid</a></Button>
               </Card.Body>
             </Card>
           </Col>

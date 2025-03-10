@@ -75,7 +75,7 @@ app.post('/signin', async (req, res) => {
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid) {
-        const token = jwt.sign({ userId: user._id, username }, SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id, username }, SECRET_KEY, { expiresIn: '2h' });
         res.json({ message: 'Signin successful', token });
     } else {
         res.status(400).json({ message: 'Invalid credentials' }); 
@@ -95,7 +95,7 @@ app.post('/auction', authenticate, async (req, res) => {
             itemImage,
             description,
             currentBid: startingBid,
-            highestBidder: "NA",
+            highestBidder: "",
             closingTime,
         });
 
