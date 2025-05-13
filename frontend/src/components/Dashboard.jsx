@@ -13,6 +13,7 @@ import {
 
 const Dashboard = () => {
   const [items, setItems] = useState([]);
+  const [activeTab, setActiveTab] = useState("browse");
   const nav = useNavigate();
   const id = localStorage.getItem("id");
 
@@ -40,7 +41,20 @@ const Dashboard = () => {
   };
 
 
+
+
+  const handleSelect = (eventKey) => {setActiveTab(eventKey);};
+  const filteredData = () => {
+    if (activeTab === 'closed-auctions') {
+      return items.filter(item => item.isClosed); // show only closed
+    }
+    
+    return items.filter(item => !item.isClosed); // browse open auctions
+  };
+
+
   return (
+    
     <Container
       fluid
       className="text-white border-bottom border-top p-4 "
@@ -63,26 +77,26 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <Nav variant="underline" defaultActiveKey="browse" className="mb-4">
+      <Nav variant="underline" defaultActiveKey="browse" className="mb-4" onSelect={handleSelect}>
         <Nav.Item>
           <Nav.Link eventKey="browse" className="text-white ">
             Browse Auctions
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="my-auctions" className="text-white ">
-            My Auctions
+          <Nav.Link eventKey="closed-auctions" className="text-white ">
+            Closed Auctions
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
+        {/* <Nav.Item>
           <Nav.Link eventKey="my-bids" className="text-white ">
             My Bids
           </Nav.Link>
-        </Nav.Item>
+        </Nav.Item> */}
       </Nav>
 
       <Row>
-        {items.map((item) => (
+        {filteredData().map((item) => (
           <Col md={4} sm={6} className="mb-4 ">
             <Card
               className=" text-white border-light h-100 "

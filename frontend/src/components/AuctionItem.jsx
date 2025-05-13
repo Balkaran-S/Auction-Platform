@@ -7,9 +7,11 @@ function AuctionItem() {
   const { id } = useParams();
   const [item, setItem] = useState({});
   const [bid, setBid] = useState(0);
+  const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    
     const fetchItem = async () => {
       try {
         const res = await axios.get(`http://localhost:5001/auctions/${id}`);
@@ -27,19 +29,23 @@ function AuctionItem() {
   }, [id]);
 
   const handleBid = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert("You must be signed in to post an auction.");
+      navigate("/signin");
+      return;
+    }
     if (bid <= item.currentBid) {
       setMessage("*Bid must be higher than the current bid.");
       return;
     }
-    const username = prompt("Enter your username to place a bid:");
-
-   
+    setUsername(prompt("Enter your username to place a bid:"));
 
     try {
       const res = await axios.post(`http://localhost:5001/bid/${id}`, {
         bid,
         username,
-      });
+      }, { headers: { Authorization: `Bearer ${token}` } });
       setMessage(res.data.message);
       if (res.data.winner) {
         setMessage(`Auction closed. Winner: ${res.data.winner}`);
