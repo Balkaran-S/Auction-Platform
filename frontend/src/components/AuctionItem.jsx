@@ -39,7 +39,7 @@ function AuctionItem() {
       setMessage("*Bid must be higher than the current bid.");
       return;
     }
-    setUsername(prompt("Enter your username to place a bid:"));
+    
 
     try {
       const res = await axios.post(`http://localhost:5001/bid/${id}`, {
@@ -48,7 +48,8 @@ function AuctionItem() {
       }, { headers: { Authorization: `Bearer ${token}` } });
       setMessage(res.data.message);
       if (res.data.winner) {
-        setMessage(`Auction closed. Winner: ${res.data.winner}`);
+        setMessage(`Auction closed. Winner: ${res.data.winner} Navigating to Dashboard.`);
+        navigate("/dashboard");
       }
     } catch (error) {
       setMessage("Error placing bid.");
@@ -75,7 +76,7 @@ function AuctionItem() {
         <h2 className="p-4">{item.itemName}</h2>
         <p className="text-secondary">{item.description}</p>
 
-        <p>Current Bid: ${item.currentBid}</p>
+        <p>Current Bid: $ {item.currentBid}</p>
         <p>Highest Bidder - {item.highestBidder || "No bids yet"} </p>
         <p>Closing Time: {new Date(item.closingTime).toLocaleString()}</p>
 

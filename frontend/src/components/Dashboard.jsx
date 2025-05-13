@@ -115,7 +115,7 @@ const Dashboard = () => {
                 <Card.Text className="text-secondary">
                   {item.description}
                 </Card.Text>
-                  <p>Current Bid: {item.currentBid}</p>
+                  <p>Current Bid: $ {item.currentBid}</p>
                   <p>Highest Bidder - {item.highestBidder || "No Bids Yet"}</p>
                 <p>
                   Closing Time: {new Date(item.closingTime).toLocaleString()}

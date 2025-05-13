@@ -6,6 +6,8 @@ import Navibar from './components/Navibar';
 import Dashboard from './components/Dashboard';
 import PostAuction from './components/PostAuction';
 import AuctionItem from './components/AuctionItem';
+import About from './components/About';
+import Contact from './components/Contact';
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/auction/:id" element={<AuctionItem/>} />
             <Route path="/post-auction" element={<PostAuction/>} /> 
+            <Route path="/about" element={<About/>}/>
+            <Route path="/contact" element={<Contact/>}/>
             </Routes>
 
           </main>

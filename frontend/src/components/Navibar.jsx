@@ -20,8 +20,8 @@ export default function Navibar() {
               <h1  >Auction Master</h1>
               <div class="">
                 <a class="navbar-brand text-light" href="/">Home</a>
-                <a class="navbar-brand text-light" href="#">About</a>
-                <a class="navbar-brand text-light" href="#">Contact</a>
+                <a class="navbar-brand text-light" href="/about">About</a>
+                <a class="navbar-brand text-light" href="/contact">Contact</a>
                 <a class="navbar-brand text-light" href="./signup">Signup</a>
                 <a class="navbar-brand text-light" href="./signin">Signin</a>
                 <button className="btn btn-light m-3">
